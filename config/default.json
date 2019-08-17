@@ -1,0 +1,7 @@
+{
+  "env": "development",
+  "port": 3000,
+  "apiKey": "you_desired_key",
+  "dbUrl": "postgres://username:password@host:port/database",
+  "dbSSL": false
+}
