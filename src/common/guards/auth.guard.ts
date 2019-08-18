@@ -32,7 +32,7 @@ async function validateRequest(
 ): Promise<boolean> {
   const apiKey = request.headers["x-api-key"];
 
-  if (apiKey == undefined) {
+  if (apiKey === undefined) {
     throw new HttpException(
       "An x-api-key header is required for this resource",
       HttpStatus.UNAUTHORIZED,

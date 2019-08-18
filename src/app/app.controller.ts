@@ -45,7 +45,7 @@ export class AppController {
   @ApiOkResponse({ type: LinkDto, isArray: true })
   @ApiBadRequestResponse({ description: "Missing 'query' query param" })
   async search(@Query("query") query: string): Promise<LinkDto[]> {
-    if (query === undefined) {
+    if (query === undefined || query === "") {
       throw new HttpException(
         "An 'query' query param is required",
         HttpStatus.BAD_REQUEST,
