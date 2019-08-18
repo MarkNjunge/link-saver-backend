@@ -83,7 +83,7 @@ export class AppService {
       detail.description,
       detail.image,
     );
-    this.linkRepository.save(link);
+    await this.linkRepository.save(link);
 
     return link;
   }
