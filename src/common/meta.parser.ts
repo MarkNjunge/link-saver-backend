@@ -5,15 +5,19 @@ export async function parse(url: string): Promise<UrlMeta> {
   const res = await axios.get(url);
   const $ = cheerio.load(res.data);
 
-  let title = $("meta[property='og:title']").attr("content");
-  const description = $("meta[property='og:description']").attr("content");
-  const image = $("meta[property='og:image']").attr("content");
+  const title = $("title").text();
 
-  if (title == undefined) {
-    title = url
-      .split(/(http|https):\/\//)
-      .slice(-1)[0]
-      .split("/")[0];
+  let description = $("meta[property='og:description']").attr("content");
+  if (description == undefined || description == "") {
+    description = $("meta[name='description']").attr("content");
+  }
+  if (description == undefined || description == "") {
+    description = $("meta[name='twitter:description']").attr("content");
+  }
+
+  let image = $("meta[property='og:image']").attr("content");
+  if (image == undefined || image == "") {
+    image = $("meta[name='twitter:image']").attr("content");
   }
 
   return { title, description, image };
