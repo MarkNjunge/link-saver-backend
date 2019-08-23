@@ -18,6 +18,7 @@ import {
   ApiImplicitHeader,
   ApiCreatedResponse,
   ApiOkResponse,
+  ApiImplicitQuery,
 } from "@nestjs/swagger";
 import { ApiResponse } from "../common/ApiResponse";
 
@@ -34,24 +35,35 @@ export class AppController {
   @Get("/all")
   @UseGuards(AuthGuard)
   @ApiImplicitHeader({ name: "x-api-key" })
+  @ApiImplicitQuery({ name: "limit", required: false })
+  @ApiImplicitQuery({ name: "page", required: false })
   @ApiOkResponse({ type: LinkDto, isArray: true })
-  all(): Promise<LinkDto[]> {
-    return this.appService.all();
+  all(
+    @Query("limit") limit: number = 5,
+    @Query("page") page: number = 1,
+  ): Promise<LinkDto[]> {
+    return this.appService.all(limit, page);
   }
 
   @Get("/search")
   @UseGuards(AuthGuard)
   @ApiImplicitHeader({ name: "x-api-key" })
+  @ApiImplicitQuery({ name: "limit", required: false })
+  @ApiImplicitQuery({ name: "page", required: false })
   @ApiOkResponse({ type: LinkDto, isArray: true })
   @ApiBadRequestResponse({ description: "Missing 'query' query param" })
-  async search(@Query("query") query: string): Promise<LinkDto[]> {
+  async search(
+    @Query("query") query: string,
+    @Query("limit") limit: number = 5,
+    @Query("page") page: number = 1,
+  ): Promise<LinkDto[]> {
     if (query === undefined || query === "") {
       throw new HttpException(
         "An 'query' query param is required",
         HttpStatus.BAD_REQUEST,
       );
     }
-    return this.appService.search(query);
+    return this.appService.search(query, limit, page);
   }
 
   @Post("/save")

@@ -26,8 +26,12 @@ export class AppService {
   /**
    * Get all saved links
    */
-  async all(): Promise<LinkDto[]> {
-    const links = await this.linkRepository.find();
+  async all(limit: number, page: number): Promise<LinkDto[]> {
+    const links = await this.linkRepository.find({
+      take: limit,
+      skip: (page - 1) * limit,
+      order: { dateTimeAdded: "DESC" },
+    });
 
     return links.map(
       v =>
@@ -46,11 +50,13 @@ export class AppService {
    * Search for a link based on its title or tags.
    * @param query title or tag
    */
-  async search(query: string): Promise<LinkDto[]> {
+  async search(query: string, limit: number, page: number): Promise<LinkDto[]> {
     // ILIKE not supported. See https://github.com/typeorm/typeorm/issues/4418
     const links = await this.linkRepository.find({
       where: `url ilike '%${query}%' or tags ilike '%${query}%' or title ilike '%${query}%'`,
-      take: 5,
+      take: limit,
+      skip: (page - 1) * limit,
+      order: { dateTimeAdded: "DESC" },
     });
 
     return links.map(
