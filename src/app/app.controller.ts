@@ -8,6 +8,7 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  Put,
 } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { LinkDto, SaveLinkDto } from "./dto/link.dto";
@@ -73,6 +74,15 @@ export class AppController {
   @ApiBadRequestResponse({ description: "Invalid Body" })
   async save(@Body() dto: SaveLinkDto): Promise<LinkDto> {
     return this.appService.save(dto);
+  }
+
+  @Put("/update")
+  @UseGuards(AuthGuard)
+  @ApiImplicitHeader({ name: "x-api-key" })
+  @ApiOkResponse({ description: "The link was updated", type: ApiResponse })
+  @ApiBadRequestResponse({ description: "Invalid Body" })
+  async update(@Body() dto: SaveLinkDto): Promise<ApiResponse> {
+    return this.appService.update(dto);
   }
 
   @Delete("/delete")

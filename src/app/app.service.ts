@@ -95,6 +95,19 @@ export class AppService {
   }
 
   /**
+   * Update a link's tags.
+   * @param saveLinkDto Link url and tags
+   */
+  async update(dto: SaveLinkDto): Promise<ApiResponse> {
+    const res = await this.linkRepository.update(
+      { url: dto.url },
+      { tags: dto.tags },
+    );
+
+    return new ApiResponse("Tags updated");
+  }
+
+  /**
    * Delete a link based on the url.
    * @param url Link url
    */

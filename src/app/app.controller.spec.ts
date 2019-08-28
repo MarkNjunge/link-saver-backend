@@ -100,6 +100,18 @@ describe("AppController", () => {
     });
   });
 
+  describe("/update", () => {
+    it("it should update", async () => {
+      const result = new ApiResponse("");
+
+      jest
+        .spyOn(appService, "update")
+        .mockImplementation(() => Promise.resolve(result));
+
+      expect(await appController.update(new SaveLinkDto())).toEqual(result);
+    });
+  });
+
   describe("/delete", () => {
     it("it should delete", async () => {
       const result = new ApiResponse("OK");
