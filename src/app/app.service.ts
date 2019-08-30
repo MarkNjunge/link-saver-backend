@@ -20,7 +20,8 @@ export class AppService {
    * Root route for the api.
    */
   index(): ApiResponse {
-    return new ApiResponse("link-saver");
+    const ver = process.env.npm_package_version;
+    return new ApiResponse(`link-saver v${ver}`);
   }
 
   /**
