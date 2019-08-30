@@ -5,7 +5,13 @@ export async function parse(url: string): Promise<UrlMeta> {
   const res = await axios.get(url);
   const $ = cheerio.load(res.data);
 
-  const title = $("title").text();
+  let title = $("head title").text();
+  // Happens with pdfs
+  if (!title) {
+    const decodedUrl = decodeURI(url);
+    const parts = decodedUrl.split("/");
+    title = parts[parts.length - 1];
+  }
 
   let description = $("meta[property='og:description']").attr("content");
   if (description === undefined || description === "") {
