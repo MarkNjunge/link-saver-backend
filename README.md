@@ -1,5 +1,7 @@
 # link-saver-backend
 
+![](https://github.com/MarkNjunge/link-saver-backend/workflows/Main%20Workflow/badge.svg)
+
 Backend API from an application to save links with tags.
 
 Built using [NestJS](https://nestjs.com/) starter.
