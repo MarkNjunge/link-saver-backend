@@ -1,4 +1,4 @@
-name: Main Workflow
+name: My Workflow
 on: [push]
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "10.x"
-      - name: lint and test
+      - name: yarn install and test
         env:
           CI: true
         run: |
