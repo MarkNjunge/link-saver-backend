@@ -57,6 +57,7 @@ function intializeSwagger(app: NestFastifyApplication) {
     .setTitle("link-saver")
     .setDescription("link-saver API")
     .setContactEmail("mark.kamau@outlook.com")
+    .setSchemes(process.env.NODE_ENV === "production" ? "https" : "http")
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
