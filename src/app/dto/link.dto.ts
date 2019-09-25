@@ -1,5 +1,5 @@
 import { ApiModelProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class LinkDto {
   @ApiModelProperty()
@@ -35,7 +35,7 @@ export class SaveLinkDto {
   @ApiModelProperty()
   url: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @ApiModelProperty({ description: "Comma seperated list" })
   tags: string;
 }

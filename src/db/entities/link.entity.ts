@@ -17,7 +17,7 @@ export class Link {
   @Index({ fulltext: true })
   url: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Index({ fulltext: true })
   tags: string;
 
