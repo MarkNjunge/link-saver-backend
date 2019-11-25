@@ -84,7 +84,7 @@ export class AppService {
 
     const link = new Link(
       dto.url,
-      dto.tags,
+      dto.tags.toLowerCase(),
       Date.now(),
       detail.title,
       detail.description,
