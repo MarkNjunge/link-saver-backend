@@ -1,8 +1,13 @@
 const axios = require("axios").default;
 const cheerio = require("cheerio");
+const https = require("https");
 
 export async function parse(url: string): Promise<UrlMeta> {
-  const res = await axios.get(url);
+  const agent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const res = await axios.get(url, { httpsAgent: agent });
   const $ = cheerio.load(res.data);
 
   let title = $("head title").text();
